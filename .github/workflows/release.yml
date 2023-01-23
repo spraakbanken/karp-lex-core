@@ -44,7 +44,7 @@ jobs:
           fetch-depth: 0
 
       - name: Set up PDM & Python 3.10
-        uses: pdm-project/setup-pdm@v2
+        uses: pdm-project/setup-pdm@v3
         with:
           python-version: "3.10"
 
