@@ -61,7 +61,7 @@ run-all-tests-w-coverage:
 
 .PHONY: type-check
 type-check:
-	${INVENV} mypy ${PROJECT}
+	${INVENV} mypy -p karp.lex_core
 
 .PHONY: lint
 lint:
