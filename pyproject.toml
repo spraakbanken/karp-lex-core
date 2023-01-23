@@ -1,5 +1,5 @@
 [project]
-name = "karp-lex"
+name = "karp-lex-core"
 version = "0.1.7"
 description = "The domain of the lexical platform Karp"
 authors = [
