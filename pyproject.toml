@@ -1,6 +1,6 @@
 [project]
 name = "karp-lex-core"
-version = "0.1.8"
+version = "0.1.9"
 description = "The domain of the lexical platform Karp"
 authors = [
     { name = "Kristoffer Andersson", email = "kristoffer.andersson@gu.se" },
