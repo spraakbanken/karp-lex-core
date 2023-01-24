@@ -1,9 +1,10 @@
 from datetime import datetime
 from typing import TypeVar, Generic, Optional
-import uuid
 
 from pydantic import root_validator
 from pydantic.generics import GenericModel
+
+from karp.lex_core.value_objects import UniqueIdStr
 
 
 T = TypeVar("T")
@@ -19,7 +20,7 @@ class EntryDto(GenericModel, Generic[T]):
     entry: T
     last_modified_by: Optional[str]
     last_modified: Optional[datetime]
-    entity_id: Optional[uuid.UUID]
+    entity_id: Optional[UniqueIdStr]
     message: Optional[str]
     version: Optional[int]
     discarded: bool = False
@@ -35,8 +36,6 @@ class EntryDto(GenericModel, Generic[T]):
             values["lastModified"] = values.pop("last_modified")
         if "last_modified_by" in values:
             values["lastModifiedBy"] = values.pop("last_modified_by")
-        if "entry_id" in values:
-            values["entryId"] = values.pop("entry_id")
         if "entity_id" in values:
             values["entityId"] = values.pop("entity_id")
         return values
