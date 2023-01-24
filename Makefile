@@ -27,6 +27,12 @@ help:
 	@echo ""
 	@echo "fmt-check"
 	@echo "   check formatting on all code"
+	@echo ""
+	@echo "publish"
+	@echo "   publish tagged commit code to PyPI"
+	@echo ""
+	@echo "build"
+	@echo "   build distribution"
 
 PLATFORM := ${shell uname -o}
 PROJECT := karp/lex_core
@@ -87,3 +93,11 @@ fmt:
 .PHONY: fmt-check
 fmt-check:
 	${INVENV} black . --check
+
+.PHONY: publish
+publish:
+	git push origin main --tags
+
+.PHONY: build
+build:
+	poetry build
