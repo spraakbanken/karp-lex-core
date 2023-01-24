@@ -23,6 +23,7 @@ class EntryDto(GenericModel, Generic[T]):
     entity_id: Optional[UniqueIdStr]
     message: Optional[str]
     version: Optional[int]
+    resource: Optional[str]
     discarded: bool = False
 
     class Config:
