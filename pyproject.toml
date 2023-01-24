@@ -2,10 +2,20 @@
 name = "karp-lex-core"
 version = "0.2.0"
 description = "The core of karp-lex"
-authors = ["Kristoffer Andersson <kristoffer.andersson@gu.se>"]
+authors = [
+    "Språkbanken at the University of Gothenburg <sb-info@svenska.gu.se>",
+    "Kristoffer Andersson <kristoffer.andersson@gu.se>",
+]
 license = "MIT"
 readme = "README.md"
+homepage = "https://spraakbanken.gu.se"
+
+documentation = "https://github.com/spraakbanken/karp-lex-core"
+repository = "https://github.com/spraakbanken/karp-lex-core"
 packages = [{include = "karp"}]
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/spraakbanken/karp-lex-core/issues"
 
 [tool.poetry.dependencies]
 python = "^3.10"
