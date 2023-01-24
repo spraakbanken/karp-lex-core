@@ -33,7 +33,7 @@ PROJECT := karp/lex_core
 
 ifeq (${VIRTUAL_ENV},)
   VENV_NAME = .venv
-  INVENV = pdm run
+  INVENV = poetry run
 else
   VENV_NAME = ${VIRTUAL_ENV}
   INVENV =
@@ -43,7 +43,7 @@ ${info Platform: ${PLATFORM}}
 
 dev: install-dev
 install-dev:
-	pdm install
+	poetry install
 
 .PHONY: test
 test: run-all-tests

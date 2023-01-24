@@ -5,6 +5,9 @@ on:
     tags:
       - v*
 
+env:
+  POETRY_VERSION: 1.3.1
+
 jobs:
   test:
     runs-on: ${{ matrix.os }}
@@ -24,10 +27,23 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up PDM & Python ${{ matrix.python-version }}
-        uses: pdm-project/setup-pdm@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
+      # - name: Load cached $HOME/.local
+      #   uses: actions/cache@v3.1.6
+      #   with:
+      #     path: ~/.local
+      #     key: dotlocal-${{ runner.os }}-${{ matrix.python-version }}-${{ env.POETRY_VERSION }}-${{ hashFiles('.github/workflows/build.yml') }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3
+        with:
+          version: ${{ env.POETRY_VERSION }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
       - name: Install dependencies
         run: make install-dev
@@ -43,10 +59,23 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Set up PDM & Python 3.10
-        uses: pdm-project/setup-pdm@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
+
+      # - name: Load cached $HOME/.local
+      #   uses: actions/cache@v3.1.6
+      #   with:
+      #     path: ~/.local
+      #     key: dotlocal-${{ runner.os }}-${{ matrix.python-version }}-${{ env.POETRY_VERSION }}-${{ hashFiles('.github/workflows/build.yml') }}
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1.3
+        with:
+          version: ${{ env.POETRY_VERSION }}
+          virtualenvs-create: true
+          virtualenvs-in-project: true
 
       - name: Build distribution
         run: pdm build
