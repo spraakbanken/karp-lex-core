@@ -17,12 +17,16 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        python-version: ["3.10"]
+        python-version: ["3.10", "3.11"]
         task:
           - name: Lint code
             run: make lint
           - name: Run tests
             run: make test
+          - name: Typecheck
+            run: make type-check
+          - name: Doc tests
+            run: make run-doc-tests
 
     steps:
       - uses: actions/checkout@v3
