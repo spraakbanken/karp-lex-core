@@ -9,7 +9,7 @@ def test_unique_ids_are_sortable():  # noqa: ANN201
 
 
 class TestUniqueId:
-    def test_bad_tyoe_raises_type_error(self) -> None:
+    def test_bad_type_raises_type_error(self) -> None:
         with pytest.raises(TypeError):
             UniqueId.validate(None)
 

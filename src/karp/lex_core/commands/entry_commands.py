@@ -10,14 +10,14 @@ from typing import (
 
 import pydantic
 from karp.lex_core.value_objects import UniqueId, make_unique_id
-from pydantic.generics import GenericModel
 
 from .base import Command
+from pydantic import BaseModel
 
 T = TypeVar("T")
 
 
-class GenericAddEntry(GenericModel, Generic[T], Command):  # noqa: D101
+class GenericAddEntry(Command, Generic[T]):  # noqa: D101
     id: UniqueId = pydantic.Field(default_factory=make_unique_id)  # noqa: A003
     resource_id: str
     entry: T
@@ -56,7 +56,7 @@ class ImportEntriesInChunks(AddEntriesInChunks):  # noqa: D101
     pass
 
 
-class GenericUpdateEntry(GenericModel, Generic[T], Command):  # noqa: D101
+class GenericUpdateEntry(Command, Generic[T]):  # noqa: D101
     resource_id: str
     id: UniqueId  # noqa: A003
     version: int

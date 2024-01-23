@@ -5,6 +5,7 @@ from typing import Optional
 
 import pydantic
 from karp.lex_core import alias_generators
+from pydantic import ConfigDict
 
 
 def utc_now() -> float:
@@ -18,12 +19,8 @@ def utc_now() -> float:
 class Command(pydantic.BaseModel):  # noqa: D101
     timestamp: float = pydantic.Field(default_factory=utc_now)
     user: str
-    message: Optional[str]
-
-    class Config:  # noqa: D106
-        arbitrary_types_allowed = True
-        extra = "forbid"
-        alias_generator = alias_generators.to_lower_camel
+    message: Optional[str] = None
+    model_config = ConfigDict(arbitrary_types_allowed=True, extra="forbid", alias_generator=alias_generators.to_lower_camel)
 
     def serialize(self) -> dict:
         """Export as dict with alias and without None:s."""  # noqa: D202

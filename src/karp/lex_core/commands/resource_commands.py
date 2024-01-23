@@ -8,18 +8,18 @@ from karp.lex_core.value_objects.unique_id import (
     UniqueIdPrimitive,
     make_unique_id,
 )
-from pydantic.generics import GenericModel
 
 from .base import Command
+from pydantic import BaseModel
 
 T = TypeVar("T")
 
 
 class EntityOrResourceIdMixin(Command):  # noqa: D101
-    resource_id: Optional[str]
-    id: Optional[UniqueId]  # noqa: A003
+    resource_id: Optional[str] = None
+    id: Optional[UniqueId] = None  # noqa: A003
 
-    @pydantic.root_validator(pre=True)
+    @pydantic.model_validator(mode="before")
     def resource_id_or_id(cls, values) -> dict:  # noqa: D102, ANN001
         resource_id = values["resourceId"] if "resourceId" in values else None
         if "id" in values and resource_id:
@@ -38,7 +38,7 @@ class EntityOrResourceIdMixin(Command):  # noqa: D101
             raise ValueError("Must give either 'id' or 'resourceId'")
 
 
-class GenericCreateResource(GenericModel, Generic[T], Command):  # noqa: D101
+class GenericCreateResource(Command, Generic[T]):  # noqa: D101
     id: UniqueId = pydantic.Field(default_factory=make_unique_id)  # noqa: A003
     resource_id: str
     name: str
@@ -77,7 +77,7 @@ class CreateResource(GenericCreateResource[dict]):
         )
 
 
-class GenericUpdateResource(EntityOrResourceIdMixin, GenericModel, Generic[T], Command):
+class GenericUpdateResource(EntityOrResourceIdMixin, Command, Generic[T]):
     """Generic command for updating a resource."""
 
     version: int

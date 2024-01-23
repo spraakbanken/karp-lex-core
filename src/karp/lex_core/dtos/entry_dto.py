@@ -3,27 +3,23 @@ from typing import Generic, Optional, TypeVar
 
 from karp.lex_core import alias_generators
 from karp.lex_core.value_objects import UniqueIdStr
-from pydantic import root_validator
-from pydantic.generics import GenericModel
+from pydantic import model_validator, BaseModel, ConfigDict
 
 T = TypeVar("T")
 
 
-class GenericEntryDto(GenericModel, Generic[T]):  # noqa: D101
+class GenericEntryDto(BaseModel, Generic[T]):  # noqa: D101
     entry: T
-    last_modified_by: Optional[str]
-    last_modified: Optional[datetime]
-    id: Optional[UniqueIdStr]  # noqa: A003
-    message: Optional[str]
-    version: Optional[int]
-    resource: Optional[str]
+    last_modified_by: Optional[str] = None
+    last_modified: Optional[datetime] = None
+    id: Optional[UniqueIdStr] = None  # noqa: A003
+    version: Optional[int] = None
+    resource: Optional[str] = None
+    message: Optional[str] = None
     discarded: bool = False
+    model_config = ConfigDict(alias_generator=alias_generators.to_lower_camel)
 
-    class Config:  # noqa: D106
-        # extra = "forbid"
-        alias_generator = alias_generators.to_lower_camel
-
-    @root_validator(pre=True)
+    @model_validator(mode="before")
     @classmethod
     def allow_snake_case(cls, values):  # noqa: ANN206, D102, ANN001
         if "last_modified" in values:
@@ -35,7 +31,7 @@ class GenericEntryDto(GenericModel, Generic[T]):  # noqa: D101
         return values
 
     def serialize(self):  # noqa: ANN201, D102
-        return self.dict(by_alias=True, exclude_none=True)
+        return self.model_dump(by_alias=True, exclude_none=True)
 
 
 class EntryDto(GenericEntryDto[dict]):  # noqa: D101

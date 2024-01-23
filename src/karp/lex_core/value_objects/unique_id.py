@@ -1,5 +1,7 @@
 """Handle of unique ids."""
 import typing
+from pydantic import GetCoreSchemaHandler, GetJsonSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 import ulid
 import ulid.codec
@@ -11,13 +13,43 @@ UniqueIdPrimitive = ulid.api.api.ULIDPrimitive
 
 
 class UniqueId(ulid.ULID):  # noqa: D101
-    @classmethod
-    def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
-        field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
+    # @classmethod
+    # # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
+    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
+    # def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
+    #     field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
 
     @classmethod
-    def __get_validators__(cls):  # noqa: ANN206, D105
-        yield cls.validate
+    def __get_pydantic_json_schema__(
+        cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
+    ) -> dict[str, any]:
+        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
+        return json_schema
+
+    # @classmethod
+    # # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
+    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
+    # def __get_validators__(cls):  # noqa: ANN206, D105
+    #     yield cls.validate
+
+    @classmethod
+    def __get_pydantic_core_schema__(
+        cls, source: typing.Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        from_any_schema = core_schema.chain_schema(
+            [
+                core_schema.any_schema(),
+                core_schema.no_info_plain_validator_function(cls.validate),
+            ]
+        )
+        return core_schema.json_or_python_schema(
+            json_schema=from_any_schema,
+            python_schema=core_schema.union_schema(
+                [core_schema.is_instance_schema(ulid.ULID), from_any_schema]
+            ),
+        )
 
     @classmethod
     def validate(cls, v) -> "UniqueId":  # noqa: D102, ANN001
@@ -59,16 +91,37 @@ parse = ulid.parse
 
 
 class UniqueIdStr(str):  # noqa: D101
+    # @classmethod
+    # # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
+    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
+    # def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
+    #     field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
     @classmethod
-    def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
-        field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
+    def __get_pydantic_json_schema__(
+        cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
+    ) -> dict[str, any]:
+        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)
+        json_schema = handler.resolve_ref_schema(json_schema)
+        json_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
+        return json_schema
+
+    # @classmethod
+    # # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
+    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
+    # def __get_validators__(cls):  # noqa: ANN206, D105
+    #     yield cls.validate
 
     @classmethod
-    def __get_validators__(cls):  # noqa: ANN206, D105
-        yield cls.validate
+    def __get_pydantic_core_schema__(
+        cls, source: typing.Any, handler: GetCoreSchemaHandler
+    ) -> core_schema.CoreSchema:
+        return core_schema.with_info_before_validator_function(
+            cls.validate,
+            core_schema.str_schema(),
+        )
 
     @classmethod
-    def validate(cls, v):  # noqa: ANN206, D102, ANN001
+    def validate(cls, v, _info):  # noqa: ANN206, D102, ANN001
         if isinstance(v, (UniqueId, ulid.ULID)):
             return str(v)
         elif not isinstance(v, str):

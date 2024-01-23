@@ -19,7 +19,7 @@ packages = [{ include = "karp/lex_core", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.10"
-pydantic = "^1.10.4"
+pydantic = "^2.5.3"
 ulid-py = "^1.1.0"
 
 [tool.poetry.group.dev.dependencies]
