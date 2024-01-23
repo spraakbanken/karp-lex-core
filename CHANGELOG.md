@@ -6,6 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## Latest Changes
 
+## 0.6.0
+
+- Update pydantic to V2.
 - Repo move to [spraakbanken/karp-lex-core](https://github/spraakbanken/karp-lex-core) from [spraakbanken/karp-backend](https://github/spraakbanken/karp-backend)
 
 ## 0.5.0
