@@ -10,7 +10,6 @@ from karp.lex_core.value_objects.unique_id import (
 )
 
 from .base import Command
-from pydantic import BaseModel
 
 T = TypeVar("T")
 

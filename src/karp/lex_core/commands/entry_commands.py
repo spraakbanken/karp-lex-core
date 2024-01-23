@@ -12,7 +12,6 @@ import pydantic
 from karp.lex_core.value_objects import UniqueId, make_unique_id
 
 from .base import Command
-from pydantic import BaseModel
 
 T = TypeVar("T")
 
