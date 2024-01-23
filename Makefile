@@ -35,7 +35,12 @@ help:
 	@echo "   build distribution"
 
 PLATFORM := ${shell uname -o}
-PROJECT := karp/lex_core
+PROJECT := karp-lex_core
+PROJECT_SRC := src/karp/lex_core
+
+default_cov := "--cov=src/karp"
+cov_report := "term-missing"
+cov := ${default_cov}
 
 ifeq (${VIRTUAL_ENV},)
   VENV_NAME = .venv
@@ -55,15 +60,15 @@ install-dev:
 test: run-all-tests
 .PHONY: run-all-tests
 run-all-tests:
-	${INVENV} pytest -vv ${PROJECT}/tests
+	${INVENV} pytest -vv tests
 
 .PHONY: run-doc-tests
 run-doc-tests:
-	${INVENV} python -m doctest -v ${PROJECT}/value_objects/unique_id.py
+	${INVENV} pytest --doctest-modules ${PROJECT_SRC}
 
 .PHONY: run-all-tests-w-coverage
 run-all-tests-w-coverage:
-	${INVENV} pytest -vv --cov=${PROJECT}  --cov-report=xml ${PROJECT}/tests
+	${INVENV} pytest -vv ${cov}  --cov-report=${cov_report} tests
 
 .PHONY: type-check
 type-check:
@@ -71,28 +76,22 @@ type-check:
 
 .PHONY: lint
 lint:
-	${INVENV}  pylint --rcfile=.pylintrc ${PROJECT}
+	${INVENV} ruff ${PROJECT_SRC} tests
 
-.PHONY: lint-refactorings
-lint-refactorings:
-	${INVENV} pylint --disable=C,W,E --enable=R ${PROJECT}
-
-bumpversion-major:
-	${INVENV} bump2version major
-
-bumpversion-minor:
-	${INVENV} bump2version minor
-
+part := "patch"
+# bump given part of version
 bumpversion:
-	${INVENV} bump2version patch
+	${INVENV} bump2version ${part}
 
 .PHONY: fmt
 fmt:
-	${INVENV} black .
+	${INVENV} ruff format ${PROJECT_SRC} tests
 
 .PHONY: fmt-check
-fmt-check:
-	${INVENV} black . --check
+.PHONY: check-fmt
+fmt-check: check-fmt
+check-fmt:
+	${INVENV} ruff format --check ${PROJECT_SRC} tests
 
 .PHONY: publish
 publish:

@@ -1,38 +1,31 @@
-from datetime import datetime
-from typing import TypeVar, Generic, Optional
+from datetime import datetime  # noqa: D100
+from typing import Generic, Optional, TypeVar
 
+from karp.lex_core import alias_generators
+from karp.lex_core.value_objects import UniqueIdStr
 from pydantic import root_validator
 from pydantic.generics import GenericModel
-
-from karp.lex_core.value_objects import UniqueIdStr
-
 
 T = TypeVar("T")
 
 
-def to_lower_camel(s: str) -> str:
-    return "".join(
-        word.capitalize() if i > 0 else word for i, word in enumerate(s.split("_"))
-    )
-
-
-class EntryDto(GenericModel, Generic[T]):
+class GenericEntryDto(GenericModel, Generic[T]):  # noqa: D101
     entry: T
     last_modified_by: Optional[str]
     last_modified: Optional[datetime]
-    entity_id: Optional[UniqueIdStr]
+    id: Optional[UniqueIdStr]  # noqa: A003
     message: Optional[str]
     version: Optional[int]
     resource: Optional[str]
     discarded: bool = False
 
-    class Config:
-        extra = "forbid"
-        alias_generator = to_lower_camel
+    class Config:  # noqa: D106
+        # extra = "forbid"
+        alias_generator = alias_generators.to_lower_camel
 
     @root_validator(pre=True)
     @classmethod
-    def allow_snake_case(cls, values):
+    def allow_snake_case(cls, values):  # noqa: ANN206, D102, ANN001
         if "last_modified" in values:
             values["lastModified"] = values.pop("last_modified")
         if "last_modified_by" in values:
@@ -41,5 +34,9 @@ class EntryDto(GenericModel, Generic[T]):
             values["entityId"] = values.pop("entity_id")
         return values
 
-    def serialize(self):
+    def serialize(self):  # noqa: ANN201, D102
         return self.dict(by_alias=True, exclude_none=True)
+
+
+class EntryDto(GenericEntryDto[dict]):  # noqa: D101
+    ...
