@@ -13,26 +13,14 @@ UniqueIdPrimitive = ulid.api.api.ULIDPrimitive
 
 
 class UniqueId(ulid.ULID):  # noqa: D101
-    # @classmethod
-    # # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
-    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    # def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
-    #     field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
-
     @classmethod
     def __get_pydantic_json_schema__(
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
-    ) -> dict[str, any]:
-        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)
+    ) -> dict[str, typing.Any]:
+        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
         json_schema = handler.resolve_ref_schema(json_schema)
         json_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
         return json_schema
-
-    # @classmethod
-    # # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
-    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    # def __get_validators__(cls):  # noqa: ANN206, D105
-    #     yield cls.validate
 
     @classmethod
     def __get_pydantic_core_schema__(
@@ -91,25 +79,14 @@ parse = ulid.parse
 
 
 class UniqueIdStr(str):  # noqa: D101
-    # @classmethod
-    # # TODO[pydantic]: We couldn't refactor `__modify_schema__`, please create the `__get_pydantic_json_schema__` manually.
-    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    # def __modify_schema__(cls, field_schema):  # noqa: ANN206, ANN001, D105
-    #     field_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
     @classmethod
     def __get_pydantic_json_schema__(
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
-    ) -> dict[str, any]:
-        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)
+    ) -> dict[str, typing.Any]:
+        json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
         json_schema = handler.resolve_ref_schema(json_schema)
         json_schema.update(examples=["01BJQMF54D093DXEAWZ6JYRPAQ"])
         return json_schema
-
-    # @classmethod
-    # # TODO[pydantic]: We couldn't refactor `__get_validators__`, please create the `__get_pydantic_core_schema__` manually.
-    # # Check https://docs.pydantic.dev/latest/migration/#defining-custom-types for more information.
-    # def __get_validators__(cls):  # noqa: ANN206, D105
-    #     yield cls.validate
 
     @classmethod
     def __get_pydantic_core_schema__(
