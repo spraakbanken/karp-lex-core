@@ -62,12 +62,16 @@ test: run-all-tests
 run-all-tests:
 	${INVENV} pytest -vv tests
 
-.PHONY: run-doc-tests
-run-doc-tests:
+.PHONY: doc-tests
+doc-tests:
 	${INVENV} pytest --doctest-modules ${PROJECT_SRC}
 
-.PHONY: run-all-tests-w-coverage
-run-all-tests-w-coverage:
+.PHONY: doc-tests-w-coverage
+doc-tests-w-coverage:
+	${INVENV} pytest ${cov} --cov-report=${cov_report} --doctest-modules ${PROJECT_SRC}
+
+.PHONY: test-w-coverage
+test-w-coverage:
 	${INVENV} pytest -vv ${cov}  --cov-report=${cov_report} tests
 
 .PHONY: type-check
