@@ -1,3 +1,5 @@
+"""Entry commands."""
+
 from typing import (
     Annotated,
     Generic,
@@ -17,7 +19,7 @@ T = TypeVar("T")
 
 
 class GenericAddEntry(Command, Generic[T]):  # noqa: D101
-    id: UniqueId = pydantic.Field(default_factory=make_unique_id)  # noqa: A003
+    id: UniqueId = pydantic.Field(default_factory=make_unique_id)
     resource_id: str
     entry: T
     message: str
@@ -41,7 +43,7 @@ class AddEntriesInChunks(AddEntries):  # noqa: D101
 
 class DeleteEntry(Command):  # noqa: D101
     resource_id: str
-    id: UniqueId  # noqa: A003
+    id: UniqueId
     version: int
     message: Optional[str] = None
     cmdtype: Literal["delete_entry"] = "delete_entry"
@@ -57,7 +59,7 @@ class ImportEntriesInChunks(AddEntriesInChunks):  # noqa: D101
 
 class GenericUpdateEntry(Command, Generic[T]):  # noqa: D101
     resource_id: str
-    id: UniqueId  # noqa: A003
+    id: UniqueId
     version: int
     entry: T
     message: str
@@ -75,8 +77,12 @@ EntryCommandType = Annotated[
 
 
 class EntryCommand(pydantic.BaseModel):
+    """A common class for Entry commands."""
+
     cmd: EntryCommandType
 
 
 class ExecuteBatchOfEntryCommands(pydantic.BaseModel):
+    """Represent a batch of `EntryCommand`s."""
+
     commands: Iterable[EntryCommand]
