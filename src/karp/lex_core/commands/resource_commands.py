@@ -16,7 +16,7 @@ T = TypeVar("T")
 
 class EntityOrResourceIdMixin(Command):  # noqa: D101
     resource_id: Optional[str] = None
-    id: Optional[UniqueId] = None  # noqa: A003
+    id: Optional[UniqueId] = None
 
     @pydantic.model_validator(mode="before")
     def resource_id_or_id(cls, values) -> dict:  # noqa: D102, ANN001
@@ -38,7 +38,7 @@ class EntityOrResourceIdMixin(Command):  # noqa: D101
 
 
 class GenericCreateResource(Command, Generic[T]):  # noqa: D101
-    id: UniqueId = pydantic.Field(default_factory=make_unique_id)  # noqa: A003
+    id: UniqueId = pydantic.Field(default_factory=make_unique_id)
     resource_id: str
     name: str
     config: T

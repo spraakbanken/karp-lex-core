@@ -1,10 +1,11 @@
 """Handle of unique ids."""
+
 import typing
-from pydantic import GetCoreSchemaHandler, GetJsonSchemaHandler
-from pydantic_core import CoreSchema, core_schema
 
 import ulid
 import ulid.codec
+from pydantic import GetCoreSchemaHandler, GetJsonSchemaHandler
+from pydantic_core import CoreSchema, core_schema
 
 # UniqueId = ulid.ULID
 
@@ -14,7 +15,7 @@ UniqueIdPrimitive = ulid.api.api.ULIDPrimitive
 
 class UniqueId(ulid.ULID):  # noqa: D101
     @classmethod
-    def __get_pydantic_json_schema__(
+    def __get_pydantic_json_schema__(  # noqa: D105
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
     ) -> dict[str, typing.Any]:
         json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
@@ -23,7 +24,7 @@ class UniqueId(ulid.ULID):  # noqa: D101
         return json_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(
+    def __get_pydantic_core_schema__(  # noqa: D105
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         from_any_schema = core_schema.chain_schema(
@@ -80,7 +81,7 @@ parse = ulid.parse
 
 class UniqueIdStr(str):  # noqa: D101
     @classmethod
-    def __get_pydantic_json_schema__(
+    def __get_pydantic_json_schema__(  # noqa: D105
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
     ) -> dict[str, typing.Any]:
         json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
@@ -89,7 +90,7 @@ class UniqueIdStr(str):  # noqa: D101
         return json_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(
+    def __get_pydantic_core_schema__(  # noqa: D105
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         return core_schema.with_info_before_validator_function(

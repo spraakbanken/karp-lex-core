@@ -1,3 +1,5 @@
+"""Entry repository commands."""
+
 from typing import Literal, Optional
 
 import pydantic
@@ -7,7 +9,9 @@ from .base import Command
 
 
 class CreateEntryRepository(Command):
-    id: UniqueId = pydantic.Field(default_factory=make_unique_id)  # noqa: A003
+    """Command for creating EntryRepository."""
+
+    id: UniqueId = pydantic.Field(default_factory=make_unique_id)
     name: str
     connection_str: Optional[str] = None
     config: dict

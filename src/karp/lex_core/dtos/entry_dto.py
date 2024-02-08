@@ -3,7 +3,7 @@ from typing import Generic, Optional, TypeVar
 
 from karp.lex_core import alias_generators
 from karp.lex_core.value_objects import UniqueIdStr
-from pydantic import model_validator, BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 T = TypeVar("T")
 
@@ -12,7 +12,7 @@ class GenericEntryDto(BaseModel, Generic[T]):  # noqa: D101
     entry: T
     last_modified_by: Optional[str] = None
     last_modified: Optional[datetime] = None
-    id: Optional[UniqueIdStr] = None  # noqa: A003
+    id: Optional[UniqueIdStr] = None
     version: Optional[int] = None
     resource: Optional[str] = None
     message: Optional[str] = None
