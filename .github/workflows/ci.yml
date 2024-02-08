@@ -88,6 +88,9 @@ jobs:
       ${{ contains(matrix.python-version, 'dev') && true || false }}
 
     runs-on: ${{ matrix.os }}-latest
+    env:
+      OS: ${{ matrix.os }}-latest
+      PYTHON: ${{ matrix.python-version }}
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
@@ -122,13 +125,19 @@ jobs:
       # Run tests and upload coverage
       #----------------------------------------------
       - name: Run tests for coverage
-        run: make test-w-coverage
+        run: make test-w-coverage cov_report=xml
 
-      - name: Upload coverage files
-        uses: actions/upload-artifact@v4
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
         with:
-          name: .coverage-${{ matrix.os }}-py${{ matrix.python-version }}
-          path: .coverage
+          token: ${{ secrets.CODECOV_TOKEN }}
+          # directory: ./coverage
+          env_vars: OS,PYTHON
+          fail_ci_if_error: false
+          # files: ./coverage/coverage.xml
+          # flags: unittests
+          # name: codecov-umbrella
+          verbose: true
   
   doctests:
     name: "Doctest (${{ matrix.os }}) "
@@ -140,6 +149,8 @@ jobs:
         os: [ubuntu] #, macos] # , windows-latest]
 
     runs-on: ${{ matrix.os }}-latest
+    env:
+      OS: ${{ matrix.os }}-latest
     steps:
       #----------------------------------------------
       #       check-out repo and set-up python
@@ -174,62 +185,22 @@ jobs:
       # Run tests and upload coverage
       #----------------------------------------------
       - name: Run tests for coverage
-        run: make test-w-coverage
-
-      - name: Upload coverage files
-        uses: actions/upload-artifact@v4
-        with:
-          name: .coverage-${{ matrix.os }}-py${{ env.MINIMUM_PYTHON_VERSION }}-doctest
-          path: .coverage
-
-
-  upload-coverage:
-    name: Upload test coverage to CodeCov
-    needs: [coverage,doctests]
-    runs-on: ubuntu-latest
-    permissions:
-      statuses: write
-    steps:
-      #----------------------------------------------
-      #       check-out repo and set-up python
-      #----------------------------------------------
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Set up python ${{ env.MINIMUM_PYTHON_VERSION }}
-        id: setup-python
-        uses: actions/setup-python@v5
-        with:
-          python-version: ${{ env.MINIMUM_PYTHON_VERSION }}
-
-      #----------------------------------------------
-      # install dependencies if cache does not exist
-      #----------------------------------------------
-      - name: Install dependencies
-        run: pip install coverage
-
-      - name: download coverage files
-        uses: actions/download-artifact@v4
-        with:
-          pattern: .coverage-*
-
-      - name: convert coverage to xml
-        run: |
-          ls -aR
-          coverage combine .coverage*/.coverage
-          coverage xml -i 
-          ls -a
+        run: make test-w-coverage cov_report=xml
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           # directory: ./coverage
-          # env_vars: OS,PYTHON
+          env_vars: OS,PYTHON,TESTTYPE
           fail_ci_if_error: false
           # files: ./coverage/coverage.xml
           # flags: unittests
           # name: codecov-umbrella
           verbose: true
+        env:
+          PYTHON: ${{ env.MINIMUM_PYTHON_VERSION }}
+          TESTTYPE: doctest
 
    # https://github.com/marketplace/actions/alls-green#why used for branch protection checks
   check:
