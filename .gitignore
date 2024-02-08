@@ -133,3 +133,4 @@ dmypy.json
 pdm.lock
 log.txt
 poetry.lock
+.pdm-python
