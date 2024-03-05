@@ -1,4 +1,5 @@
 """Commands top-level module."""
+
 from .entry_commands import (
     AddEntries,
     AddEntriesInChunks,

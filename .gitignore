@@ -130,7 +130,7 @@ dmypy.json
 
 # PDM
 .pdm.toml
-pdm.lock
+# pdm.lock
 log.txt
 poetry.lock
 .pdm-python
