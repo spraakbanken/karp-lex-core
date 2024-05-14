@@ -1,7 +1,6 @@
 """Base class for lex commands"""  # noqa: D400, D415
 
 from datetime import datetime, timezone
-from typing import Optional
 
 import pydantic
 from pydantic import ConfigDict
@@ -20,7 +19,7 @@ def utc_now() -> float:
 class Command(pydantic.BaseModel):  # noqa: D101
     timestamp: float = pydantic.Field(default_factory=utc_now)
     user: str
-    message: Optional[str] = None
+    message: str | None = None
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
         extra="forbid",

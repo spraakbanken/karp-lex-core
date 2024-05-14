@@ -3,7 +3,7 @@ from karp_lex_types.value_objects import make_unique_id
 
 
 class TestDeserializeEntryCommand:
-    def test_can_deserialize_add_entry(self) -> None:
+    def test_can_deserialize_add_entry(self) -> None:  # noqa: PLR6301
         data = {
             "cmd": {
                 "cmdtype": "add_entry",
@@ -18,7 +18,7 @@ class TestDeserializeEntryCommand:
 
         assert isinstance(cmd.cmd, AddEntry)
 
-    def test_can_deserialize_delete_entry(self) -> None:
+    def test_can_deserialize_delete_entry(self) -> None:  # noqa: PLR6301
         data = {
             "cmd": {
                 "cmdtype": "delete_entry",
@@ -34,7 +34,7 @@ class TestDeserializeEntryCommand:
 
         assert isinstance(cmd.cmd, DeleteEntry)
 
-    def test_can_deserialize_update_entry(self) -> None:
+    def test_can_deserialize_update_entry(self) -> None:  # noqa: PLR6301
         data = {
             "cmd": {
                 "cmdtype": "update_entry",

@@ -15,7 +15,7 @@ UniqueIdPrimitive = ulid.api.api.ULIDPrimitive
 
 class UniqueId(ulid.ULID):  # noqa: D101
     @classmethod
-    def __get_pydantic_json_schema__(  # noqa: D105
+    def __get_pydantic_json_schema__(  # noqa: D105, PLW3201
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
     ) -> dict[str, typing.Any]:
         json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
@@ -24,7 +24,7 @@ class UniqueId(ulid.ULID):  # noqa: D101
         return json_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(  # noqa: D105
+    def __get_pydantic_core_schema__(  # noqa: D105, PLW3201
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         from_any_schema = core_schema.chain_schema(
@@ -41,7 +41,7 @@ class UniqueId(ulid.ULID):  # noqa: D101
         )
 
     @classmethod
-    def validate(cls, v) -> "UniqueId":  # noqa: D102, ANN001
+    def validate(cls, v) -> "UniqueId":  # noqa: D102
         if isinstance(v, UniqueId):
             return v  # type: ignore
         if isinstance(v, ulid.ULID):
@@ -63,7 +63,7 @@ UniqueIdType = (ulid.ULID, UniqueId)
 
 
 def make_unique_id(
-    t: typing.Optional[ulid.codec.TimestampPrimitive] = None,
+    t: ulid.codec.TimestampPrimitive | None = None,
 ) -> UniqueId:
     """Generate an UniqueId that are sortable.
 
@@ -78,10 +78,12 @@ def make_unique_id(
 
 parse = ulid.parse
 
+LEN_OF_ULID: int = 26
+
 
 class UniqueIdStr(str):  # noqa: D101
     @classmethod
-    def __get_pydantic_json_schema__(  # noqa: D105
+    def __get_pydantic_json_schema__(  # noqa: D105, PLW3201
         cls, core_schema: CoreSchema, handler: GetJsonSchemaHandler
     ) -> dict[str, typing.Any]:
         json_schema = super().__get_pydantic_json_schema__(core_schema, handler)  # type: ignore [misc]
@@ -90,7 +92,7 @@ class UniqueIdStr(str):  # noqa: D101
         return json_schema
 
     @classmethod
-    def __get_pydantic_core_schema__(  # noqa: D105
+    def __get_pydantic_core_schema__(  # noqa: D105, PLW3201
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         return core_schema.with_info_before_validator_function(
@@ -99,13 +101,13 @@ class UniqueIdStr(str):  # noqa: D101
         )
 
     @classmethod
-    def validate(cls, v, _info):  # noqa: ANN206, D102, ANN001
-        if isinstance(v, (UniqueId, ulid.ULID)):
+    def validate(cls, v, _info):  # noqa: D102
+        if isinstance(v, UniqueId | ulid.ULID):
             return str(v)
-        elif not isinstance(v, str):
+        if not isinstance(v, str):
             raise TypeError("string or UniqueId required")
 
-        if len(v) != 26:
+        if len(v) != LEN_OF_ULID:
             raise ValueError("invalid uniqueid format")
 
         return cls(v)

@@ -1,6 +1,6 @@
 """Entry repository commands."""
 
-from typing import Literal, Optional
+from typing import Literal
 
 import pydantic
 
@@ -14,7 +14,7 @@ class CreateEntryRepository(Command):
 
     id: UniqueId = pydantic.Field(default_factory=make_unique_id)
     name: str
-    connection_str: Optional[str] = None
+    connection_str: str | None = None
     config: dict
     message: str
     user: str
@@ -22,7 +22,7 @@ class CreateEntryRepository(Command):
 
     @classmethod
     def from_dict(  # noqa: D102
-        cls, data: dict, *, user: str, message: Optional[str] = None
+        cls, data: dict, *, user: str, message: str | None = None
     ) -> "CreateEntryRepository":
         return cls(
             name=data.pop("resource_id"),

@@ -1,6 +1,6 @@
 """Commands for lex resources."""
 
-from typing import Generic, Literal, Optional, TypeVar
+from typing import Generic, Literal, TypeVar
 
 import pydantic
 
@@ -16,12 +16,13 @@ T = TypeVar("T")
 
 
 class EntityOrResourceIdMixin(Command):  # noqa: D101
-    resource_id: Optional[str] = None
-    id: Optional[UniqueId] = None
+    resource_id: str | None = None
+    id: UniqueId | None = None
 
     @pydantic.model_validator(mode="before")
-    def resource_id_or_id(cls, values) -> dict:  # noqa: D102, ANN001
-        resource_id = values["resourceId"] if "resourceId" in values else None
+    @classmethod
+    def resource_id_or_id(cls, values) -> dict:  # noqa: D102
+        resource_id = values.get("resourceId", None)
         if "id" in values and resource_id:
             raise ValueError("Can't give both 'id' and 'resourceId'")
 
@@ -30,12 +31,11 @@ class EntityOrResourceIdMixin(Command):  # noqa: D101
                 "id": None,
                 "resourceId": resource_id,
             }
-        elif "id" in values:
+        if "id" in values:
             return dict(values) | {
                 "resourceId": None,
             }
-        else:
-            raise ValueError("Must give either 'id' or 'resourceId'")
+        raise ValueError("Must give either 'id' or 'resourceId'")
 
 
 class GenericCreateResource(Command, Generic[T]):  # noqa: D101
@@ -55,8 +55,8 @@ class CreateResource(GenericCreateResource[dict]):
         cls,
         data: dict,
         entry_repo_id: UniqueIdPrimitive,
-        user: Optional[str] = None,
-        message: Optional[str] = None,
+        user: str | None = None,
+        message: str | None = None,
     ) -> "CreateResource":
         try:
             resource_id = data.pop("resource_id")

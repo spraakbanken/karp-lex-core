@@ -1,13 +1,11 @@
 """Entry commands."""
 
+from collections.abc import Iterable
 from typing import (
     Annotated,
     Generic,
-    Iterable,
     Literal,
-    Optional,
     TypeVar,
-    Union,
 )
 
 import pydantic
@@ -46,7 +44,7 @@ class DeleteEntry(Command):  # noqa: D101
     resource_id: str
     id: UniqueId
     version: int
-    message: Optional[str] = None
+    message: str | None = None
     cmdtype: Literal["delete_entry"] = "delete_entry"
 
 
@@ -73,7 +71,7 @@ class UpdateEntry(GenericUpdateEntry[dict]):  # noqa: D101
 
 
 EntryCommandType = Annotated[
-    Union[AddEntry, DeleteEntry, UpdateEntry], pydantic.Field(discriminator="cmdtype")
+    AddEntry | DeleteEntry | UpdateEntry, pydantic.Field(discriminator="cmdtype")
 ]
 
 
