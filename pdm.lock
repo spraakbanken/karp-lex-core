@@ -5,7 +5,7 @@
 groups = ["default", "dev"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:ec756215f05df404bbb5d765aa2fa523beee2755ced86138ba0c32acd41bceb1"
+content_hash = "sha256:5a0d5980c18e5dca45c2d74ae711d4e42e47d30062aef670130d3f8d71a2dc33"
 
 [[package]]
 name = "annotated-types"
@@ -149,6 +149,21 @@ groups = ["dev"]
 files = [
     {file = "iniconfig-2.0.0-py3-none-any.whl", hash = "sha256:b6a85871a79d2e3b22d2d1b94ac2824226a63c6b741c88f7ae975f18b6778374"},
     {file = "iniconfig-2.0.0.tar.gz", hash = "sha256:2d91e135bf72d31a410b17c16da610a82cb55f6b0477d1a902134b24a455b8b3"},
+]
+
+[[package]]
+name = "karp-lex-types"
+version = "0.6.2"
+requires_python = ">=3.10"
+summary = "The types of karp-lex"
+groups = ["default"]
+dependencies = [
+    "pydantic<3.0.0,>=2.5.3",
+    "ulid-py<2.0.0,>=1.1.0",
+]
+files = [
+    {file = "karp_lex_types-0.6.2-py3-none-any.whl", hash = "sha256:282ff697a1f2e0832caf53ccf585fa65690fcbde73d096a30cfa4d2deaec0300"},
+    {file = "karp_lex_types-0.6.2.tar.gz", hash = "sha256:ee8857199903b50a366c4fc018211acb4f07689ce6157eb1cf380dc31a1c4dd8"},
 ]
 
 [[package]]
