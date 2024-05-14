@@ -4,12 +4,14 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
-## Latest Changes
+## 0.6.3
+
+- Rename project to [spraakbanken/karp-lex-types](https://github.com/spraakbanken/karp-lex-types).
 
 ## 0.6.0
 
 - Update pydantic to V2.
-- Repo move to [spraakbanken/karp-lex-core](https://github/spraakbanken/karp-lex-core) from [spraakbanken/karp-backend](https://github/spraakbanken/karp-backend)
+- Repo move to [spraakbanken/karp-lex-core](https://github.com/spraakbanken/karp-lex-core) from [spraakbanken/karp-backend](https://github.com/spraakbanken/karp-backend)
 
 ## 0.5.0
 

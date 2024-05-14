@@ -1,5 +1,7 @@
 # karp-lex-core
 
+>![NOTE] rename to `karp-lex-types`
+
 - **karp-lex-core** [![PyPI version](https://badge.fury.io/py/karp-lex-core.svg)](https://badge.fury.io/py/karp-lex-core)
 
 The core for karp-lex
