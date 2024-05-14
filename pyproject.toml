@@ -4,18 +4,18 @@ authors = [
     { name = "Kristoffer Andersson", email = "kristoffer.andersson@gu.se" },
 ]
 license = { text = "MIT" }
-requires-python = ">=3.10,<4.0"
+requires-python = ">=3.10"
 dependencies = ["pydantic<3.0.0,>=2.5.3", "ulid-py<2.0.0,>=1.1.0"]
-name = "karp-lex-core"
+name = "karp-lex-types"
 version = "0.6.2"
-description = "The core of karp-lex"
+description = "The types of karp-lex"
 readme = "README.md"
 
 [project.urls]
-"Bug Tracker" = "https://github.com/spraakbanken/karp-lex-core/issues"
+"Bug Tracker" = "https://github.com/spraakbanken/karp-lex-types/issues"
 homepage = "https://spraakbanken.gu.se"
-repository = "https://github.com/spraakbanken/karp-lex-core"
-documentation = "https://github.com/spraakbanken/karp-lex-core"
+repository = "https://github.com/spraakbanken/karp-lex-types"
+documentation = "https://github.com/spraakbanken/karp-lex-types"
 
 
 [tool.pdm.dev-dependencies]
@@ -28,7 +28,7 @@ dev = [
 ]
 
 [tool.pdm.build]
-includes = ["src/karp/lex_core"]
+includes = ["src/karp_lex_types"]
 
 [build-system]
 requires = ["hatchling"]
@@ -41,4 +41,4 @@ allow-direct-references = true
 exclude = ["/.github", "/docs"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/karp/"]
+packages = ["src/karp_lex_types"]

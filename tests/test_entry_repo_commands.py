@@ -1,4 +1,4 @@
-from karp.lex_core.commands import CreateEntryRepository
+from karp_lex_types.commands import CreateEntryRepository
 
 
 class TestCreateEntryRepository:

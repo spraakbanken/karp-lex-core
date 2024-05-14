@@ -4,8 +4,9 @@ from datetime import datetime, timezone
 from typing import Optional
 
 import pydantic
-from karp.lex_core import alias_generators
 from pydantic import ConfigDict
+
+from karp_lex_types import alias_generators
 
 
 def utc_now() -> float:

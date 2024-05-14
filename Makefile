@@ -49,8 +49,8 @@ help:
 	@echo ""
 
 PLATFORM := `uname -o`
-REPO := "karp-lex-core"
-PROJECT_SRC := "src/karp/lex_core"
+REPO := "karp-lex-types"
+PROJECT_SRC := "src/karp_lex_types"
 
 ifeq (${VIRTUAL_ENV},)
   VENV_NAME = .venv

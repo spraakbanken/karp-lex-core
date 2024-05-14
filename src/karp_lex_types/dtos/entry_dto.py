@@ -1,9 +1,10 @@
 from datetime import datetime  # noqa: D100
 from typing import Generic, Optional, TypeVar
 
-from karp.lex_core import alias_generators
-from karp.lex_core.value_objects import UniqueIdStr
 from pydantic import BaseModel, ConfigDict, model_validator
+
+from karp_lex_types import alias_generators
+from karp_lex_types.value_objects import UniqueIdStr
 
 T = TypeVar("T")
 

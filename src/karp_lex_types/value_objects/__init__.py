@@ -1,4 +1,4 @@
-from karp.lex_core.value_objects.unique_id import (  # noqa: D104
+from karp_lex_types.value_objects.unique_id import (  # noqa: D104
     UniqueId,
     UniqueIdStr,
     UniqueIdType,
