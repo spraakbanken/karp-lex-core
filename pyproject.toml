@@ -1,11 +1,11 @@
 [project]
 authors = [
-    { name = "Språkbanken at the University of Gothenburg", email = "sb-info@svenska.gu.se" },
+    { name = "Språkbanken Text", email = "sb-info@svenska.gu.se" },
     { name = "Kristoffer Andersson", email = "kristoffer.andersson@gu.se" },
 ]
 license = { text = "MIT" }
 requires-python = ">=3.10"
-dependencies = ["pydantic<3.0.0,>=2.5.3", "ulid-py<2.0.0,>=1.1.0"]
+dependencies = ["pydantic>=2.5.3", "ulid-py>=1.1.0"]
 name = "karp-lex-types"
 version = "0.6.3"
 description = "The types of karp-lex"
@@ -42,4 +42,3 @@ dev = [
 
 [tool.pdm.build]
 includes = ["src/karp_lex_types"]
-
