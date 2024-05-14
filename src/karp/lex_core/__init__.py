@@ -1,4 +1,4 @@
-__version__ = "0.6.2"  # noqa: D104
+__version__ = "0.6.3"  # noqa: D104
 
 import warnings
 
