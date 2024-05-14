@@ -3,7 +3,8 @@
 from typing import Generic, Literal, Optional, TypeVar
 
 import pydantic
-from karp.lex_core.value_objects.unique_id import (
+
+from karp_lex_types.value_objects.unique_id import (
     UniqueId,
     UniqueIdPrimitive,
     make_unique_id,

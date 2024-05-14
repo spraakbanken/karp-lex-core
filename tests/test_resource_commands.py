@@ -1,5 +1,5 @@
 import pytest
-from karp.lex_core.commands.resource_commands import (
+from karp_lex_types.commands.resource_commands import (
     CreateResource,
     EntityOrResourceIdMixin,
 )

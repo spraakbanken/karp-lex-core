@@ -1,4 +1,4 @@
-from karp.lex_core.dtos import EntryDto
+from karp_lex_types.dtos import EntryDto
 
 
 def test_can_create_entry_dto():  # noqa: ANN201

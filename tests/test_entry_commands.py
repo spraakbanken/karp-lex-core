@@ -1,5 +1,5 @@
-from karp.lex_core.commands import AddEntry, DeleteEntry, EntryCommand, UpdateEntry
-from karp.lex_core.value_objects import make_unique_id
+from karp_lex_types.commands import AddEntry, DeleteEntry, EntryCommand, UpdateEntry
+from karp_lex_types.value_objects import make_unique_id
 
 
 class TestDeserializeEntryCommand:
