@@ -1,6 +1,6 @@
 """Commands top-level module."""
 
-from .entry_commands import (
+from karp_lex_types.commands.entry_commands import (
     AddEntries,
     AddEntriesInChunks,
     AddEntry,
@@ -13,10 +13,11 @@ from .entry_commands import (
     ImportEntriesInChunks,
     UpdateEntry,
 )
-from .entry_repo_commands import CreateEntryRepository
-from .resource_commands import (
+from karp_lex_types.commands.entry_repo_commands import CreateEntryRepository
+from karp_lex_types.commands.resource_commands import (
     CreateResource,
     DeleteResource,
+    EntityOrResourceIdMixin,
     GenericCreateResource,
     GenericUpdateResource,
     PublishResource,
@@ -29,22 +30,23 @@ __all__ = [
     "AddEntries",
     "AddEntriesInChunks",
     "AddEntry",
-    "DeleteEntry",
-    "GenericAddEntry",
-    "GenericUpdateEntry",
-    "ImportEntries",
-    "ImportEntriesInChunks",
-    "UpdateEntry",
-    "EntryCommand",
-    "ExecuteBatchOfEntryCommands",
     # EntryRepo commands
     "CreateEntryRepository",
     # Resource commands
     "CreateResource",
+    "DeleteEntry",
     "DeleteResource",
+    "EntityOrResourceIdMixin",
+    "EntryCommand",
+    "ExecuteBatchOfEntryCommands",
+    "GenericAddEntry",
     "GenericCreateResource",
+    "GenericUpdateEntry",
     "GenericUpdateResource",
+    "ImportEntries",
+    "ImportEntriesInChunks",
     "PublishResource",
     "SetEntryRepoId",
+    "UpdateEntry",
     "UpdateResource",
 ]
