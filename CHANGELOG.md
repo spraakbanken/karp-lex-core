@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Documentation
+
+- Update readme
+
 ## [0.6.3] - 2024-05-14
 
 ### Miscellaneous Tasks
