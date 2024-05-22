@@ -19,6 +19,11 @@ class EntityOrResourceIdMixin(Command):  # noqa: D101
     resource_id: str | None = None
     id: UniqueId | None = None
 
+    @pydantic.field_serializer("id")
+    def serialize_id(self, id: UniqueId, _info) -> str:  # noqa: PLR6301, A002
+        """Serialize id as string."""
+        return str(id)
+
     @pydantic.model_validator(mode="before")
     @classmethod
     def resource_id_or_id(cls, values) -> dict:  # noqa: D102
@@ -45,6 +50,16 @@ class GenericCreateResource(Command, Generic[T]):  # noqa: D101
     config: T
     entry_repo_id: UniqueId
     cmdtype: Literal["create_resource"] = "create_resource"
+
+    @pydantic.field_serializer("id")
+    def serialize_id(self, id: UniqueId, _info) -> str:  # noqa: PLR6301, A002
+        """Serialize id as string."""
+        return str(id)
+
+    @pydantic.field_serializer("entry_repo_id")
+    def serialize_entry_repo_id(self, entry_repo_id: UniqueId, _info) -> str:  # noqa: PLR6301
+        """Serialize id as string."""
+        return str(entry_repo_id)
 
 
 class CreateResource(GenericCreateResource[dict]):
@@ -104,3 +119,8 @@ class SetEntryRepoId(EntityOrResourceIdMixin, Command):  # noqa: D101
     entry_repo_id: UniqueId
     version: int
     cmdtype: Literal["set_entry_repo_id"] = "set_entry_repo_id"
+
+    @pydantic.field_serializer("entry_repo_id")
+    def serialize_entry_repo_id(self, entry_repo_id: UniqueId, _info) -> str:  # noqa: PLR6301
+        """Serialize id as string."""
+        return str(entry_repo_id)
