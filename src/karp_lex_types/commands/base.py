@@ -29,4 +29,4 @@ class Command(pydantic.BaseModel):  # noqa: D101
     def serialize(self) -> dict:
         """Export as dict with alias and without None:s."""  # noqa: D202
 
-        return self.dict(by_alias=True, exclude_none=True)
+        return self.model_dump(by_alias=True, exclude_none=True)
