@@ -28,7 +28,7 @@ class UniqueId(ulid.ULID):  # noqa: D101
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
         def _serialize(instance: typing.Any, info: typing.Any) -> typing.Any:
-            return instance.to_string() if info.mode == "json" else instance
+            return str(instance) if info.mode == "json" else instance
 
         from_any_schema = core_schema.chain_schema(
             [

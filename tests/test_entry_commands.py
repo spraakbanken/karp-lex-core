@@ -50,3 +50,56 @@ class TestDeserializeEntryCommand:
         cmd = EntryCommand(**data)
 
         assert isinstance(cmd.cmd, UpdateEntry)
+
+
+class TestSerializeEntryCommand:
+    def test_can_serialize_add_entry(self) -> None:  # noqa: PLR6301
+        data = {
+            "cmd": {
+                "cmdtype": "add_entry",
+                "resourceId": "resource_a",
+                "entry": {"baseform": "sko"},
+                "message": "add sko",
+                "user": "alice@example.com",
+            }
+        }
+
+        cmd = EntryCommand(**data)
+
+        assert isinstance(cmd.cmd, AddEntry)
+        cmd.model_dump_json()
+
+    def test_can_serialize_delete_entry(self) -> None:  # noqa: PLR6301
+        data = {
+            "cmd": {
+                "cmdtype": "delete_entry",
+                "resourceId": "resource_a",
+                "id": make_unique_id(),
+                "version": 1,
+                "message": "add sko",
+                "user": "alice@example.com",
+            }
+        }
+
+        cmd = EntryCommand(**data)
+
+        assert isinstance(cmd.cmd, DeleteEntry)
+        cmd.model_dump_json()
+
+    def test_can_serialize_update_entry(self) -> None:  # noqa: PLR6301
+        data = {
+            "cmd": {
+                "cmdtype": "update_entry",
+                "resourceId": "resource_a",
+                "id": make_unique_id(),
+                "entry": {"baseform": "sko"},
+                "version": 1,
+                "message": "add sko",
+                "user": "alice@example.com",
+            }
+        }
+
+        cmd = EntryCommand(**data)
+
+        assert isinstance(cmd.cmd, UpdateEntry)
+        cmd.model_dump_json()
