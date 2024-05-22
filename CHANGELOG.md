@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Fixed
+
+- Use model_dump instead of dict
+
 ## [0.7.2] - 2024-05-22
 
 ### Fixed
