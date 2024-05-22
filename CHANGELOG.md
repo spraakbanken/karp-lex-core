@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Fixed
+
+- Serialize UniuqeId as str
+
 ## [0.6.5] - 2024-05-15
 
 ### Documentation
