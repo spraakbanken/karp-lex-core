@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Fixed
+
+- Serialize field with UniqueIds as string
+
 ## [0.7.1] - 2024-05-22
 
 ### Fixed
