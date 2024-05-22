@@ -27,6 +27,9 @@ class UniqueId(ulid.ULID):  # noqa: D101
     def __get_pydantic_core_schema__(  # noqa: D105, PLW3201
         cls, source: typing.Any, handler: GetCoreSchemaHandler
     ) -> core_schema.CoreSchema:
+        def _serialize(instance: typing.Any, info: typing.Any) -> typing.Any:
+            return instance.to_string() if info.mode == "json" else instance
+
         from_any_schema = core_schema.chain_schema(
             [
                 core_schema.any_schema(),
@@ -37,6 +40,9 @@ class UniqueId(ulid.ULID):  # noqa: D101
             json_schema=from_any_schema,
             python_schema=core_schema.union_schema(
                 [core_schema.is_instance_schema(ulid.ULID), from_any_schema]
+            ),
+            serialization=core_schema.plain_serializer_function_ser_schema(
+                _serialize, info_arg=True
             ),
         )
 
