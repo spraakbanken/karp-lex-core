@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+
+### Fixed
+
+- Use str to serialize UniqueId
+
 ## [0.7.0] - 2024-05-22
 
 ### Fixed
